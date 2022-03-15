@@ -9,6 +9,7 @@ import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -30,11 +31,17 @@ public class User extends AbsEntity {
     @Column(nullable = false)
     private String password;
 
+    @OneToOne
+    private Cart cart;
+
     private Date date_of_birth;
 
     @ManyToMany
-    private Set<Role> roles;
+    private List<Role> roles;
 
     @ManyToMany
-    private Set<Permission> permissions;
+    private List<Permission> permissions;
+
+    @OneToOne
+    private PurchasedHistory purchasedHistory;
 }

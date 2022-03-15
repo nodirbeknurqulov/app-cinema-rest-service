@@ -1,4 +1,5 @@
 package uz.pdp.appcinemarestservice.entity;
+// Nurkulov Nodirbek 3/15/2022  8:45 AM
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,19 +7,19 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import java.util.Date;
 
-// Nurkulov Nodirbek 3/14/2022  11:22 PM
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Entity(name = "rows")
-public class Row extends AbsEntity{
+@Entity(name = "purchased_histories")
+public class PurchasedHistory extends AbsEntity {
 
-    private Integer number;
+    @ManyToOne
+    private PaymentType paymentType;
 
-    @OneToMany
-    private List<Seat> seatList;
+    private Date date;
 }

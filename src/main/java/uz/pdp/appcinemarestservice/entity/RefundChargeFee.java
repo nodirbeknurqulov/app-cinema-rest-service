@@ -1,5 +1,4 @@
 package uz.pdp.appcinemarestservice.entity;
-// Nurkulov Nodirbek 3/14/2022  11:13 PM
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,20 +8,17 @@ import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import java.util.List;
-@EqualsAndHashCode(callSuper = true)
+
+// Nurkulov Nodirbek 3/15/2022  8:41 AM
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "halls")
-public class Hall extends AbsEntity {
+@EqualsAndHashCode(callSuper = true)
+@Entity(name = "refund_charge_fees")
+public class RefundChargeFee extends AbsEntity {
     @Column(nullable = false)
-    private String name;
+    private int intervalInMinutes;
 
     @Column(nullable = false)
-    private double vipAdditionalFeeInPercentage;
-
-    @OneToMany
-    private List<Row> rowList;
+    private double percentage;
 }

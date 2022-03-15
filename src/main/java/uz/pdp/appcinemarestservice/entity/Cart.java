@@ -1,4 +1,5 @@
 package uz.pdp.appcinemarestservice.entity;
+// Nurkulov Nodirbek 3/15/2022  8:33 AM
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,13 +8,12 @@ import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
-// Nurkulov Nodirbek 3/14/2022  10:58 PM
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @EqualsAndHashCode(callSuper = true)
-@Entity(name = "permissions")
-public class Permission extends AbsEntity {
-    private String permissionName;
+@AllArgsConstructor
+@Data
+@Entity(name = "carts")
+public class Cart extends AbsEntity {
+
 }

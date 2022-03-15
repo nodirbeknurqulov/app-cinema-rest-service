@@ -1,24 +1,22 @@
 package uz.pdp.appcinemarestservice.entity;
 
+// Nurkulov Nodirbek 3/15/2022  7:33 AM
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import java.util.Date;
 
-// Nurkulov Nodirbek 3/14/2022  11:22 PM
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Entity(name = "rows")
-public class Row extends AbsEntity{
-
-    private Integer number;
-
-    @OneToMany
-    private List<Seat> seatList;
+@Entity(name = "night_session_add_fee")
+public class NightSessionAdditionalFee extends AbsEntity {
+    private double percentage;
+    private Date date;
 }

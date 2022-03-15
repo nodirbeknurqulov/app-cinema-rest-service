@@ -6,19 +6,17 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import java.sql.Time;
 
-// Nurkulov Nodirbek 3/14/2022  11:22 PM
+// Nurkulov Nodirbek 3/15/2022  7:22 AM
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Entity(name = "rows")
-public class Row extends AbsEntity{
+@Entity(name = "session_times")
+public class SessionTime extends AbsEntity {
 
-    private Integer number;
-
-    @OneToMany
-    private List<Seat> seatList;
+    private Time time;
 }

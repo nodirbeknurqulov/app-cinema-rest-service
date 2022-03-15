@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "roles")
 public class Role extends AbsEntity {
     private String name;
