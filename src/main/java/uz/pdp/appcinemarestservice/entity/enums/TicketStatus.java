@@ -1,4 +1,4 @@
-package uz.pdp.appcinemarestservice.entity;
+package uz.pdp.appcinemarestservice.entity.enums;
 
 public enum TicketStatus {
     NEW,

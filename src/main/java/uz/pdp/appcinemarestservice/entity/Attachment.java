@@ -21,6 +21,6 @@ public class Attachment extends AbsEntity {
 
     private String contentType;// application/pdf || image/png
 
-    //bu 'File systemga' saqlaganda kerak boladi'
-    private String name;//papkani ichidan topish uchun
+//    //bu 'File systemga' saqlaganda kerak boladi'
+//    private String name;//papkani ichidan topish uchun
 }

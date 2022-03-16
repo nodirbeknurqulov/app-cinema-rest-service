@@ -31,12 +31,6 @@ public class Movie extends AbsEntity {
     private List<Attachment> coverImage;
 
     @Column(nullable = false)
-    private String directors;
-
-    @Column(nullable = false)
-    private String genres;
-
-    @Column(nullable = false)
     private double minPrice;
 
     @OneToOne
