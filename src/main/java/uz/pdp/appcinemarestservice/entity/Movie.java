@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 // Nurkulov Nodirbek 3/15/2022  6:53 AM
@@ -27,14 +28,23 @@ public class Movie extends AbsEntity {
     @Column(nullable = false)
     private int durationInMinutes;
 
-    @OneToMany
-    private List<Attachment> coverImage;
+    @OneToOne
+    private Attachment coverImage;
+
+    @Column(nullable = false)
+    private String trailerVideoUrl; // ex. youtube link
+
+    @Column(nullable = false)
+    private Date releaseDate;
+
 
     @Column(nullable = false)
     private double minPrice;
 
-    @OneToOne
+    @ManyToOne
     private Distributor distributor;
+
+    private Double budget;
 
     @Column(nullable = false)
     private double distributorShareInPercentages;
@@ -44,4 +54,26 @@ public class Movie extends AbsEntity {
 
     @ManyToMany
     private List<Attachment> attachment;
+
+
+
+
+
+//
+//    private Double budget;
+//
+//    @ManyToOne
+//    private Distributor distributor;
+//
+//    @Column(nullable = false)
+//    private Double distributorShareInPercentage;
+//
+//
+//    @ManyToMany
+//    private List<Cast> casts;
+//
+//
+//    @ManyToMany
+//    private List<Genre> genres;
+
 }
