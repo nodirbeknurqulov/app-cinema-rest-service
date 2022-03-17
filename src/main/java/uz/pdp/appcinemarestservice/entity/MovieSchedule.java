@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "movie_sessions")
-public class MovieSession extends AbsEntity {
+public class MovieSchedule extends AbsEntity {
 
     @ManyToOne
     private Movie movie;

@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 public class SessionHall extends AbsEntity {
 
     @ManyToOne
-    private MovieSession movieSession;
+    private MovieSchedule movieSession;
 
     @ManyToOne
     private Hall hall;

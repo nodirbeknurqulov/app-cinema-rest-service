@@ -1,4 +1,4 @@
-package uz.pdp.appcinemarestservice.entity;
+package uz.pdp.appcinemarestservice.entity.attachements;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +15,11 @@ import javax.persistence.Entity;
 @Data
 @Entity(name = "attachments")
 public class Attachment extends AbsEntity {
-    private String fileOriginalName;//pdp.jpg, inn.pdf
+    private String originalFileName;
 
-    private long size;//2048 KB
+    private long size;
 
-    private String contentType;// application/pdf || image/png
+    private String contentType;
 
-//    //bu 'File systemga' saqlaganda kerak boladi'
-//    private String name;//papkani ichidan topish uchun
+    private String name;
 }

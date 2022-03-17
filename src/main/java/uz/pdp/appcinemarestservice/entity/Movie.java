@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.*;
@@ -37,7 +38,6 @@ public class Movie extends AbsEntity {
     @Column(nullable = false)
     private Date releaseDate;
 
-
     @Column(nullable = false)
     private double minPrice;
 
@@ -49,31 +49,9 @@ public class Movie extends AbsEntity {
     @Column(nullable = false)
     private double distributorShareInPercentages;
 
-    @ManyToMany
+    @OneToMany
     private List<Actor> actors;
 
     @ManyToMany
-    private List<Attachment> attachment;
-
-
-
-
-
-//
-//    private Double budget;
-//
-//    @ManyToOne
-//    private Distributor distributor;
-//
-//    @Column(nullable = false)
-//    private Double distributorShareInPercentage;
-//
-//
-//    @ManyToMany
-//    private List<Cast> casts;
-//
-//
-//    @ManyToMany
-//    private List<Genre> genres;
-
+    private List<Genre> genres;
 }

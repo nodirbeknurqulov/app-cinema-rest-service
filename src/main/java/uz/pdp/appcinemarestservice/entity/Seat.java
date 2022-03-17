@@ -15,6 +15,19 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @Entity(name ="seats")
 public class Seat extends AbsEntity {
+
     @Column(nullable = false)
     private Integer number;
+
+    @ManyToOne
+    private Row row;
+
+    @ManyToOne
+    private PriceCategory priceCategory;
+
+    public Seat(Integer number, PriceCategory priceCategory) {
+        this.number = number;
+        this.priceCategory = priceCategory;
+    }
+
 }

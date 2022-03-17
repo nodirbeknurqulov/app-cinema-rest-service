@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -19,15 +20,19 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "price_categories")
 public class PriceCategory extends AbsEntity {
-    @Column(nullable = false)
-    private String name;
+    @Column(nullable = false, length = 50)
+    private String name, color;
 
     @Column(nullable = false)
-    private double additionalFeeInPercentage;
+    private Double addAddFeeInPercent;
 
-    @Column(nullable = false)
-    private String color;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "priceCategory")
+    private List<Seat> seats;
 
-    @OneToMany
-    private List<Seat> seat;
+    public PriceCategory(String name, Double addAddFeeInPercent, String color) {
+        this.name = name;
+        this.addAddFeeInPercent = addAddFeeInPercent;
+        this.color = color;
+    }
+
 }

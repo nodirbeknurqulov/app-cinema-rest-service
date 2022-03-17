@@ -17,8 +17,18 @@ import java.util.List;
 @Entity(name = "rows")
 public class Row extends AbsEntity{
 
+    @Column(nullable = false)
     private Integer number;
 
-    @OneToMany
-    private List<Seat> seatList;
+    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
+    private List<Seat> seats;
+
+    @ManyToOne
+    private Hall hall;
+
+    public Row(Integer number, Hall hall) {
+        this.number = number;
+        this.hall = hall;
+    }
+
 }

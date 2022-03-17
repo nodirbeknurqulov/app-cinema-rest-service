@@ -1,5 +1,6 @@
 package uz.pdp.appcinemarestservice.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -22,10 +23,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/distributor")
+@RequiredArgsConstructor
 public class DistributorController {
 
-    @Autowired
-    DistributorService distributorService;
+    private final DistributorService distributorService;
 
     @GetMapping()
     public ResponseEntity<List<Distributor>> getDistributors() {
@@ -64,7 +65,6 @@ public class DistributorController {
         ApiResponse apiResponse = distributorService.editDistributor(id, distributorDto);
         return ResponseEntity.ok(apiResponse);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteDistributor(@PathVariable Integer id) {
         ApiResponse apiResponse = distributorService.deleteDistributor(id);

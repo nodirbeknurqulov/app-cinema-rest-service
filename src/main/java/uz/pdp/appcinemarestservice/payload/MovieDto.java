@@ -1,4 +1,5 @@
 package uz.pdp.appcinemarestservice.payload;
+
 // Nurkulov Nodirbek 3/16/2022  12:01 PM
 
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class MovieDto {
 
     private double minPrice;
 
-    private UUID coverImgId;
+    private Integer coverImgId;
 
     private String trailerVideoUrl; // ex. youtube link
 

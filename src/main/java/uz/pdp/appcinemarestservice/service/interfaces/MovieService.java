@@ -1,16 +1,23 @@
 package uz.pdp.appcinemarestservice.service.interfaces;
 
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import uz.pdp.appcinemarestservice.entity.Movie;
+import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.payload.MovieDto;
 
+import java.util.List;
+import java.util.UUID;
+
 public interface MovieService {
-    ResponseEntity getAllMovies(int pageNumber,int size, String search, String sort, boolean direction);
 
-    ResponseEntity getMovieById(Integer id);
+    HttpEntity getAllMovies(int page, int size, String search, String sort, boolean direction);
 
-    ResponseEntity addMovie(MovieDto movieDto);
+    HttpEntity getMovieById(UUID id);
 
-    ResponseEntity updateMovie(Integer id);
+    HttpEntity saveMovie(MovieDto movieDto);
 
-    ResponseEntity deleteMovieById(Integer id);
+    HttpEntity deleteMovie(UUID id);
+
 }

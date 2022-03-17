@@ -1,4 +1,5 @@
 package uz.pdp.appcinemarestservice.entity;
+// Nurkulov Nodirbek 3/17/2022  7:43 AM
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,25 +12,17 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-// Nurkulov Nodirbek 3/15/2022  8:26 AM
-
+@EqualsAndHashCode(callSuper = true)
+@Entity(name = "photos")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Entity(name = "tickets")
-public class Ticket extends AbsEntity {
+public class Photo extends AbsEntity {
     @ManyToOne
-    private MovieSchedule movieSession;
+    private Movie movie;
 
     @OneToOne
-    private Seat seat;
+    private Attachment attachment;
 
-    @OneToOne
-    private Attachment qr_code;
 
-    private double price;
-
-    @ManyToOne
-    private Cart cart;
 }

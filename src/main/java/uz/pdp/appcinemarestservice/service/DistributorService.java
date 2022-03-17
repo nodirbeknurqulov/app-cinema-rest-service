@@ -35,7 +35,6 @@ public class DistributorService {
         return optionalDistributor.orElse(null);
     }
 
-
     public ApiResponse addDistributor(DistributorDto distributorDto) {
         boolean existsByFullName = distributorRepository.existsByFullName(distributorDto.getFullName());
         if (existsByFullName) {

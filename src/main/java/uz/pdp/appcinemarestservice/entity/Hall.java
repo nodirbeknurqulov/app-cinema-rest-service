@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -23,6 +24,11 @@ public class Hall extends AbsEntity {
     @Column(nullable = false)
     private double vipAdditionalFeeInPercentage;
 
-    @OneToMany
-    private List<Row> rowList;
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL)
+    private List<Row> rows;
+
+    public Hall(String name) {
+        this.name = name;
+    }
+
 }

@@ -1,9 +1,10 @@
-package uz.pdp.appcinemarestservice.entity;
+package uz.pdp.appcinemarestservice.entity.attachements;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.Entity;
@@ -14,13 +15,11 @@ import javax.persistence.OneToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "attachment_content")
+@Entity(name = "attachment_contents")
 public class AttachmentContent extends AbsEntity {
 
-    private byte[] mainContent;//asosiy content(mag'zi)
+    private byte[] data;
 
-    //select * from attachment_content where attachment_id=100
-//    private Integer attachment_id;
     @OneToOne
-    private Attachment attachment;//qaysi filega tegishli ekanligini bildiradi
+    private Attachment attachment;
 }
