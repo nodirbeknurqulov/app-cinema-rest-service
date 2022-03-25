@@ -1,33 +1,28 @@
 package uz.pdp.appcinemarestservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.io.AbstractResource;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import uz.pdp.appcinemarestservice.entity.Distributor;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 
 import uz.pdp.appcinemarestservice.payload.DistributorDto;
 import uz.pdp.appcinemarestservice.repository.DistributorRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 // Nurkulov Nodirbek 3/9/2022  7:35 AM
 
 @Service
+@RequiredArgsConstructor
 public class DistributorService {
-    @Autowired
-    DistributorRepository distributorRepository;
+
+    private final DistributorRepository distributorRepository;
 
     public List<Distributor> getDistributors() {
-        List<Distributor> distributorList = distributorRepository.findAll();
-        return distributorList;
+        return distributorRepository.findAll();
     }
 
     public Distributor getDistributorById(Integer id) {

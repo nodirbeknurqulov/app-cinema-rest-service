@@ -3,6 +3,9 @@ package uz.pdp.appcinemarestservice.payload;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.core.io.AbstractResource;
+
+import java.io.ByteArrayInputStream;
 
 // Nurkulov Nodirbek 3/15/2022  12:11 PM
 @AllArgsConstructor

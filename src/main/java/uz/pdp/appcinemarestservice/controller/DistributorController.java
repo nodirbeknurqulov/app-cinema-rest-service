@@ -1,7 +1,7 @@
 package uz.pdp.appcinemarestservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.AbstractResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,19 +54,20 @@ public class DistributorController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> addDistributor(@Valid @RequestBody DistributorDto distributorDto) {
+    public ResponseEntity addDistributor(@Valid @RequestBody DistributorDto distributorDto) {
         ApiResponse apiResponse = distributorService.addDistributor(distributorDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.CONFLICT).body(apiResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> editDistributor(@PathVariable Integer id,
-                                                       @Valid @RequestBody DistributorDto distributorDto) {
+    public ResponseEntity editDistributor(@PathVariable Integer id,
+                                          @Valid @RequestBody DistributorDto distributorDto) {
         ApiResponse apiResponse = distributorService.editDistributor(id, distributorDto);
         return ResponseEntity.ok(apiResponse);
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteDistributor(@PathVariable Integer id) {
+    public ResponseEntity deleteDistributor(@PathVariable Integer id) {
         ApiResponse apiResponse = distributorService.deleteDistributor(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse);
     }

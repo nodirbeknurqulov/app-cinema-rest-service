@@ -1,20 +1,22 @@
 package uz.pdp.appcinemarestservice.service;
+
 // Nurkulov Nodirbek 3/16/2022  7:20 AM
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.appcinemarestservice.entity.Actor;
 import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
 import uz.pdp.appcinemarestservice.entity.attachements.AttachmentContent;
-import uz.pdp.appcinemarestservice.payload.ActorDto;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.repository.ActorRepository;
 import uz.pdp.appcinemarestservice.repository.AttachmentContentRepository;
 import uz.pdp.appcinemarestservice.repository.AttachmentRepository;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,104 +24,100 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class ActorService {
-//
-//    /**
-//     * ACTOR CRUDI HALI TUGAMADI DAVOM ETTIRISHIM KERAK
-//     */
-//
-//    private final ActorRepository actorRepository;
-//    private final AttachmentRepository attachmentRepository;
-//    private final AttachmentContentRepository attachmentContentRepository;
-//
-//    public ApiResponse getAllActors() {
-//        List<Actor> actorList = actorRepository.findAll();
-//        if (actorList.size() == 0) {
-//            return new ApiResponse("List empty!", false);
-//        }
-//        return new ApiResponse("Success", true, actorList);
-//    }
-//
-//    public ApiResponse getActor(Integer id) {
-//        Optional<Actor> optionalActor = actorRepository.findById(id);
-//        if (optionalActor.isPresent()) {
-//            return new ApiResponse("Distributor not found!", false);
-//        }
-//        return new ApiResponse("Success!", true, optionalActor.get());
-//    }
-//
-//    public ApiResponse addActor(MultipartFile file, ActorDto actorDto) {
-//
-//        try {
-//            Attachment attachment = new Attachment();
-//            attachment.setSize(file.getSize());
-//            attachment.setContentType(file.getContentType());
-//            attachment.setFileOriginalName(attachment.getFileOriginalName());
-//            Attachment savedAttachment = attachmentRepository.save(attachment);
-//
-//            AttachmentContent attachmentContent = new AttachmentContent();
-//            attachmentContent.setAttachment(savedAttachment);
-//            attachmentContent.setMainContent(file.getBytes());
-//            attachmentContentRepository.save(attachmentContent);
-//
-//            Actor actor = new Actor();
-//            actor.setAttachment(savedAttachment);
-//            actor.setBio(actorDto.getBio());
-//            actor.setFullName(actorDto.getFullName());
-//            actorRepository.save(actor);
-//
-//            return new ApiResponse("Actor added!",true);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return new ApiResponse("Error!!!",false);
-//    }
-//
-//    public ApiResponse editActor(Integer id, MultipartFile file, Actor actor) {
-//        Optional<Actor> optionalActor = actorRepository.findById(id);
-//        if (!optionalActor.isPresent()) {
-//            return new ApiResponse("Actor not found!!", false);
-//        }
-//        try {
-//            Actor editingActor = optionalActor.get();
-//            editingActor.setBio(actor.getBio());
-//            editingActor.setFullName(actor.getFullName());
-//            if (file.isEmpty()) {
-//                Actor saveActor = actorRepository.save(editingActor);
-//                return new ApiResponse("Successfully edited!", true, saveActor);
-//            }
-//            Attachment attachment = editingActor.getAttachment();
-//            attachment.setContentType(file.getContentType());
-//            attachment.setFileOriginalName(file.getOriginalFilename());
-//            attachment.setSize(file.getSize());
-//            Attachment saveAttachment = attachmentRepository.save(attachment);
-//
-//            AttachmentContent attachmentContent = attachmentContentRepository.findByAttachmentId(saveAttachment.getId());
-//            attachmentContent.setMainContent(file.getBytes());
-//            attachmentContent.setAttachment(saveAttachment);
-//            attachmentContentRepository.save(attachmentContent);
-//            actor.setAttachment(saveAttachment);
-//            Actor saveActor = actorRepository.save(editingActor);
-//            return new ApiResponse("Successfully edited!", true, saveActor);
-//        } catch (Exception e) {
-//            return new ApiResponse("Error!!", false);
-//        }
-//    }
-//
-//    public ApiResponse deleteActor(Integer id) {
-//        Optional<Actor> optionalActor = actorRepository.findById(id);
-//        if (!optionalActor.isPresent()) {
-//            return new ApiResponse("Actor not found!!", false);
-//        }
-//        try {
-//            Actor actor = optionalActor.get();
-//            Attachment attachment = actor.getAttachment();
-//            AttachmentContent attachmentContent = attachmentContentRepository.findByAttachmentId(attachment.getId());
-//            attachmentContentRepository.deleteById(attachmentContent.getId());
-//            attachmentRepository.deleteById(attachment.getId());
-//            actorRepository.deleteById(actor.getId());
-//            return new ApiResponse("Successfully deleted!", true);
-//        } catch (Exception e) {
-//            return new ApiResponse("Error!!", false);
-//        }
-//    }
+
+    private final AttachmentRepository attachmentRepo;
+    private final AttachmentContentRepository attachmentContentRepo;
+    private final ActorRepository actorRepo;
+
+    public ApiResponse getAllActors() {
+        List<Actor> all = actorRepo.findAll();
+        if (all.size() != 0) {
+            return new ApiResponse("Success", true, all);
+        }
+        return new ApiResponse("Not found", false, null);
+    }
+
+    public ApiResponse addActor(Actor actor, MultipartHttpServletRequest request) throws IOException {
+        Iterator<String> fileNames = request.getFileNames();
+        MultipartFile file = request.getFile(fileNames.next());
+        if (file != null) {
+            String originalFilename = file.getOriginalFilename();
+            long size = file.getSize();
+            String contentType = file.getContentType();
+            Attachment attachment = new Attachment();
+            attachment.setOriginalFileName(originalFilename);
+            attachment.setSize(size);
+            attachment.setContentType(contentType);
+            Attachment saveAttachment = attachmentRepo.save(attachment);
+
+            AttachmentContent attachmentContent = new AttachmentContent();
+            attachmentContent.setData(file.getBytes());
+            attachmentContent.setAttachment(saveAttachment);
+            AttachmentContent saveAttachmentContent = attachmentContentRepo.save(attachmentContent);
+
+            Actor actor1 = new Actor();
+            actor1.setFullName(actor.getFullName());
+            actor1.setAttachment(saveAttachment);
+            Actor save = actorRepo.save(actor1);
+            return new ApiResponse("Success", true, save);
+        }
+        return new ApiResponse("Not found", false, null);
+    }
+
+    public ApiResponse updateActor(Integer id, Actor actor, MultipartFile file) throws IOException {
+        Optional<Actor> optionalActor = actorRepo.findById(id);
+        if (optionalActor.isPresent()) {
+            Actor actor1 = optionalActor.get();
+
+            Attachment attachment = actor1.getAttachment();
+            Optional<Attachment> optionalAttachment = attachmentRepo.findById(attachment.getId());
+            if (optionalAttachment.isPresent()) {
+                Attachment attachment1 = optionalAttachment.get();
+                Optional<AttachmentContent> optionalAttachmentContent = attachmentContentRepo.findByAttachmentId(attachment.getId());
+                if (optionalAttachmentContent.isPresent()) {
+                    AttachmentContent attachmentContent = optionalAttachmentContent.get();
+                    if (file != null) {
+                        String originalFilename1 = file.getOriginalFilename();
+                        long size1 = file.getSize();
+                        String contentType1 = file.getContentType();
+                        byte[] bytes = file.getBytes();
+
+                        attachment1.setOriginalFileName(originalFilename1);
+                        attachment1.setSize(size1);
+                        attachment1.setContentType(contentType1);
+
+                        attachmentContent.setData(bytes);
+                        attachmentContent.setAttachment(attachment1);
+
+                        actor1.setFullName(actor.getFullName());
+                        actor1.setAttachment(attachmentRepo.save(attachment1));
+                        Actor save = actorRepo.save(actor1);
+                        return new ApiResponse("success", true, save);
+                    }
+                }
+            }
+        }
+        return new ApiResponse("Not found", false, null);
+    }
+
+    public ApiResponse deleteActor(Integer id) {
+        Optional<Actor> optionalActor = actorRepo.findById(id);
+        if (optionalActor.isPresent()) {
+            Actor actor = optionalActor.get();
+            attachmentRepo.delete(actor.getAttachment());
+            actorRepo.delete(actor);
+            return new ApiResponse("Success", true);
+        }
+        return new ApiResponse("Not found", false);
+    }
+
+    public ApiResponse getActorById(Integer id) {
+        Optional<Actor> optionalActor = actorRepo.findById(id);
+        if (optionalActor.isPresent()) {
+            Actor actor = optionalActor.get();
+            return new ApiResponse("Success", true, actor);
+        }
+        return new ApiResponse("Not found", false, null);
+    }
+
 }

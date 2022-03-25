@@ -1,8 +1,6 @@
 package uz.pdp.appcinemarestservice.entity.template;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,9 +8,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 // Nurkulov Nodirbek 3/14/2022  10:37 PM
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class AbsEntity {
     @Id

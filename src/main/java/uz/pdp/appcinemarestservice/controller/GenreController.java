@@ -2,6 +2,7 @@ package uz.pdp.appcinemarestservice.controller;
 // Nurkulov Nodirbek 3/16/2022  7:44 AM
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,35 +16,31 @@ import java.util.UUID;
 @RequestMapping("/api/genre")
 @RequiredArgsConstructor
 public class GenreController {
-//    private final GenreService genreService;
-//
-//    @GetMapping
-//    public HttpEntity<?> getAllGenres(){
-//        ApiResponse apiResponse = genreService.getAllGenres();
-//        return ResponseEntity.status(apiResponse.isSuccess()?200:204).body(apiResponse);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public HttpEntity<?> getGenre(@PathVariable Integer id){
-//        ApiResponse apiResponse = genreService.getGenre(id);
-//        return ResponseEntity.status(apiResponse.isSuccess()?200:409).body(apiResponse);
-//    }
-//
-//    @PostMapping
-//    public HttpEntity<?> addGenre(@RequestBody Genre genre){
-//        ApiResponse apiResponse = genreService.addGenre(genre);
-//        return ResponseEntity.status(apiResponse.isSuccess()?200:409).body(apiResponse);
-//    }
-//
-//    @PutMapping("/{id}")
-//    public HttpEntity<?> editGenre(@PathVariable Integer id,@RequestBody Genre genre){
-//        ApiResponse apiResponse = genreService.editGenre(id,genre);
-//        return ResponseEntity.status(apiResponse.isSuccess()?200:409).body(apiResponse);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public HttpEntity<?> deleteGenre(@PathVariable Integer id){
-//        ApiResponse apiResponse = genreService.deleteGenre(id);
-//        return ResponseEntity.status(apiResponse.isSuccess()?200:404).body(apiResponse);
-//    }
+
+    private final GenreService genreService;
+
+    @GetMapping
+    public ApiResponse getAllGenres() {
+        return genreService.getAllGenres();
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse getGenreById(@PathVariable Integer id) {
+        return genreService.getGenreById(id);
+    }
+
+    @PostMapping
+    public ApiResponse addGenre(@RequestBody Genre genre) {
+        return genreService.addGenre(genre);
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse updateGenre(@PathVariable Integer id, @RequestBody Genre genre) {
+        return genreService.updateGenre(id, genre);
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse deleteGenre(@PathVariable Integer id) {
+        return genreService.deleteGenre(id);
+    }
 }

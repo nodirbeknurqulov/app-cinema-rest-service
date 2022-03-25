@@ -1,6 +1,7 @@
 package uz.pdp.appcinemarestservice.controller;
 // Nurkulov Nodirbek 3/17/2022  7:58 AM
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,20 +16,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/row")
+@RequiredArgsConstructor
 public class RowController {
 
-    @Autowired
-    RowService rowService;
-
+    private final RowService rowService;
 
     @GetMapping
     public ResponseEntity getRows() {
         return rowService.getAllRows();
     }
-//
-//    @GetMapping("/{hallId}")
-//    public ResponseEntity getRowsByHallId(@PathVariable UUID hallId) {
-//        return rowService.getRowsByHallId(hallId);
-//    }
-
 }

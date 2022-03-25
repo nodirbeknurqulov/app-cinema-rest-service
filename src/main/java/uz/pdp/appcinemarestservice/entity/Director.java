@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
+import uz.pdp.appcinemarestservice.entity.attachements.AttachmentContent;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -23,7 +25,6 @@ public class Director extends AbsEntity {
     @Column(nullable = false)
     private String bio;
 
-    @OneToOne
-    private Attachment attachment;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private AttachmentContent photo;
 }

@@ -44,6 +44,9 @@ public class Movie extends AbsEntity {
     @ManyToOne
     private Distributor distributor;
 
+    @ManyToOne
+    private Director director;
+
     private Double budget;
 
     @Column(nullable = false)
@@ -54,4 +57,8 @@ public class Movie extends AbsEntity {
 
     @ManyToMany
     private List<Genre> genres;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<MovieSchedule> movieSchedules;
+
 }
