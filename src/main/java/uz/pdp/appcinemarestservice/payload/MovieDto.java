@@ -5,6 +5,7 @@ package uz.pdp.appcinemarestservice.payload;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.appcinemarestservice.entity.Distributor;
 import uz.pdp.appcinemarestservice.entity.Genre;
 
@@ -16,7 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class MovieDto {
-    private Integer id;
 
     private String title;
 
@@ -24,20 +24,25 @@ public class MovieDto {
 
     private int durationInMin;
 
+    private MultipartHttpServletRequest request;
+
+    private String trailerVideoUrl;
+
+    private List<Integer> genreIds;
+
     private double minPrice;
 
-    private Integer coverImgId;
+    private Integer distributorId;
 
-    private String trailerVideoUrl; // ex. youtube link
+    private double distributorShareInPercentage;
 
-    private Date releaseDate;
+    private List<Integer> actorsId;
 
-    private Double budget;
 
-    private Distributor distributor;
-
-    private Double distributorShareInPercentage;
-
-    private List<Genre> genres;
+//    private Integer coverImgId;
+//
+//    private Date releaseDate;
+//
+//    private Double budget;
 
 }

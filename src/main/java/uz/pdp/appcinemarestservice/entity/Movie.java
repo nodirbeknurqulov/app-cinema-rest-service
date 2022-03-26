@@ -52,7 +52,7 @@ public class Movie extends AbsEntity {
     @Column(nullable = false)
     private double distributorShareInPercentages;
 
-    @OneToMany
+    @ManyToMany
     private List<Actor> actors;
 
     @ManyToMany
@@ -60,5 +60,4 @@ public class Movie extends AbsEntity {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<MovieSchedule> movieSchedules;
-
 }

@@ -10,8 +10,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.appcinemarestservice.entity.Movie;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.payload.MovieDto;
-import uz.pdp.appcinemarestservice.service.MovieServiceImpl;
-import uz.pdp.appcinemarestservice.service.interfaces.MovieService;
+import uz.pdp.appcinemarestservice.service.MovieService;
 import uz.pdp.appcinemarestservice.utill.Constant;
 
 import java.io.IOException;
@@ -26,18 +25,28 @@ public class MovieController {
 
     private final MovieService movieService;
 
+    /**
+     * GET ALL MOVIES
+     *
+     * @param page int
+     * @param size int
+     * @return List
+     */
     @GetMapping
-    public HttpEntity getAllMovies(
-            @RequestParam(name = "size", defaultValue = Constant.DEFAULT_PAGE_SIZE) int size,
-            @RequestParam(name = "page", defaultValue = "1") int page,
-            @RequestParam(name = "search", defaultValue = "") String search,
-            @RequestParam(name = "sort", defaultValue = "title") String sort
-    ) {
-        return movieService.getAllMovies(page, size, search, sort, true);
+    public HttpEntity<?> getAllMovies(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        List<Movie> allMovies = movieService.getAllMovies(page, size);
+        return ResponseEntity.ok(allMovies);
     }
 
-    @GetMapping("/{id}")
-    public HttpEntity<?> getMovieById(@PathVariable Integer id){
-        return null;
+    /**
+     * Add movie
+     * @param movieDto MovieDto
+     * @return HttpEntity
+     */
+    @PostMapping
+    public HttpEntity<?> addMovie(@RequestBody MovieDto movieDto) {
+        ApiResponse apiResponse = movieService.addMovie(movieDto);
+        return ResponseEntity.status(201).body(apiResponse);
     }
+
 }

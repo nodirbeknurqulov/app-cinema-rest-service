@@ -23,6 +23,4 @@ public class Photo extends AbsEntity {
 
     @OneToOne
     private Attachment attachment;
-
-
 }
