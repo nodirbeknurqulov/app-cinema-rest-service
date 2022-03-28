@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import uz.pdp.appcinemarestservice.entity.Distributor;
+import uz.pdp.appcinemarestservice.entity.Movie;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.payload.DistributorDto;
 import uz.pdp.appcinemarestservice.service.DistributorService;
@@ -28,14 +29,44 @@ public class DistributorController {
 
     private final DistributorService distributorService;
 
-    @GetMapping()
-    public ResponseEntity<List<Distributor>> getDistributors() {
-        List<Distributor> distributors = distributorService.getDistributors();
-        return ResponseEntity.ok(distributors);
+//    /**
+//     * GET ALL MOVIES
+//     *
+//     * @param page int
+//     * @param size int
+//     * @return List
+//     */
+//    @GetMapping
+//    public HttpEntity<?> getAllMovies(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+//        List<Movie> allMovies = movieService.getAllMovies(page, size);
+//        return ResponseEntity.ok(allMovies);
+//    }
+
+
+//    /**
+//     * GET ALL DISTRIBUTORS
+//     * @return ResponseEntity
+//     */
+//    @GetMapping()
+//    public ResponseEntity<List<Distributor>> getDistributors() {
+//        List<Distributor> distributors = distributorService.getDistributors();
+//        return ResponseEntity.ok(distributors);
+//    }
+
+    /**
+     * GET ALL DISTRIBUTORS BY PAGE
+     * @param page int
+     * @param size int
+     * @return HttpEntity
+     */
+    @GetMapping
+    public HttpEntity<?> getAllDistributorsByPageable(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        List<Distributor> allDistributors = distributorService.getAllDistributors(page, size);
+        return ResponseEntity.ok(allDistributors);
     }
 
     @GetMapping("/{id}")
-    public HttpEntity<Distributor> getDistributor(@PathVariable Integer id) {
+    public HttpEntity<Distributor> getDistributorById(@PathVariable Integer id) {
         Distributor distributor = distributorService.getDistributorById(id);
         return ResponseEntity.ok(distributor);
     }

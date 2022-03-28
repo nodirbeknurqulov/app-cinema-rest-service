@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 // Nurkulov Nodirbek 3/15/2022  7:11 AM

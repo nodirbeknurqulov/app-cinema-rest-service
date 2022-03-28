@@ -3,8 +3,12 @@ package uz.pdp.appcinemarestservice.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.AbstractResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uz.pdp.appcinemarestservice.entity.Distributor;
+import uz.pdp.appcinemarestservice.entity.Movie;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 
 import uz.pdp.appcinemarestservice.payload.DistributorDto;
@@ -21,8 +25,18 @@ public class DistributorService {
 
     private final DistributorRepository distributorRepository;
 
-    public List<Distributor> getDistributors() {
-        return distributorRepository.findAll();
+//    /**
+//     * get all movies
+//     * @return List
+//     */
+//    public List<Distributor> getDistributors() {
+//        return distributorRepository.findAll();
+//    }
+
+    public List<Distributor> getAllDistributors(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        Page<Distributor> distributorPage = distributorRepository.findAll(pageable);
+        return distributorPage.getContent();
     }
 
     public Distributor getDistributorById(Integer id) {

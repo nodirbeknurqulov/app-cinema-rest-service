@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 // Nurkulov Nodirbek 3/15/2022  7:09 AM
 @AllArgsConstructor
@@ -24,6 +22,6 @@ public class Actor extends AbsEntity {
     @Column(nullable = false)
     private String bio;
 
-    @OneToOne
+    @OneToOne(mappedBy = "actor", cascade = CascadeType.ALL)
     private Attachment attachment;
 }
