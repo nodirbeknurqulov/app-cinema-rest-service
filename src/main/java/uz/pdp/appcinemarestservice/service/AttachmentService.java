@@ -92,4 +92,23 @@ public class AttachmentService {
         return new ApiResponse("Error!", false);
     }
 
+    public Attachment uploadFile(MultipartFile file) throws IOException {
+        String originalFilename = file.getOriginalFilename();
+        long size = file.getSize();
+        String contentType = file.getContentType();
+        Attachment attachment = new Attachment();
+        attachment.setOriginalFileName(originalFilename);
+        attachment.setSize(size);
+        attachment.setContentType(contentType);
+        Attachment savedAttachment = attachmentRepository.save(attachment);
+
+        AttachmentContent attachmentContent = new AttachmentContent();
+        attachmentContent.setData(file.getBytes());
+        attachmentContent.setAttachment(savedAttachment);
+        attachmentContentRepository.save(attachmentContent);
+        return savedAttachment;
+    }
+
+
+
 }

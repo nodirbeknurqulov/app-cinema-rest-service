@@ -27,7 +27,7 @@ public class Movie extends AbsEntity {
     private String description;
 
     @Column(nullable = false)
-    private int durationInMinutes;
+    private Integer durationInMinutes;
 
     @OneToOne
     private Attachment coverImage;
@@ -39,7 +39,7 @@ public class Movie extends AbsEntity {
     private Date releaseDate;
 
     @Column(nullable = false)
-    private double minPrice;
+    private Double minPrice;
 
     @ManyToOne
     private Distributor distributor;
@@ -50,7 +50,7 @@ public class Movie extends AbsEntity {
     private Double budget;
 
     @Column(nullable = false)
-    private double distributorShareInPercentages;
+    private Double distributorShareInPercentages;
 
     @ManyToMany
     private List<Actor> actors;

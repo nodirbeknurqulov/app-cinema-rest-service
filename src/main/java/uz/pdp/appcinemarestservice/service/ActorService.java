@@ -53,7 +53,7 @@ public class ActorService {
             AttachmentContent attachmentContent = new AttachmentContent();
             attachmentContent.setData(file.getBytes());
             attachmentContent.setAttachment(saveAttachment);
-            AttachmentContent saveAttachmentContent = attachmentContentRepo.save(attachmentContent);
+            attachmentContentRepo.save(attachmentContent);
 
             Actor actor1 = new Actor();
             actor1.setFullName(actor.getFullName());

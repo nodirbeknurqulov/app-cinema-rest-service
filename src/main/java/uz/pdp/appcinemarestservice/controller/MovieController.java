@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.appcinemarestservice.entity.Movie;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
@@ -44,9 +45,9 @@ public class MovieController {
      * @return HttpEntity
      */
     @PostMapping
-    public HttpEntity<?> addMovie(@RequestBody MovieDto movieDto) {
-        ApiResponse apiResponse = movieService.addMovie(movieDto);
-        return ResponseEntity.status(201).body(apiResponse);
+    public HttpEntity<?> addMovie(@RequestPart(name = "movie") MovieDto movieDto,
+                                  @RequestPart(name = "file") MultipartFile request) throws IOException {
+        ApiResponse apiResponse = movieService.addMovie(movieDto, request);
+        return ResponseEntity.status(apiResponse.isSuccess()? 200: 404).body(apiResponse);
     }
-
 }

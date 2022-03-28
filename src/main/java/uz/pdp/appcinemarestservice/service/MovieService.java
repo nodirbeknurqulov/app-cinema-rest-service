@@ -9,15 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.appcinemarestservice.entity.Actor;
 import uz.pdp.appcinemarestservice.entity.Distributor;
 import uz.pdp.appcinemarestservice.entity.Genre;
 import uz.pdp.appcinemarestservice.entity.Movie;
+import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.payload.MovieDto;
 import uz.pdp.appcinemarestservice.repository.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +35,7 @@ public class MovieService {
     private final ActorRepository actorRepository;
     private final GenreRepository genreRepository;
     private final DistributorRepository distributorRepository;
-    private final AttachmentRepository attachmentRepository;
+    private final AttachmentService attachmentService;
 
     /**
      * GET ALL MOVIES
@@ -54,8 +57,7 @@ public class MovieService {
      * @param movieDto MovieDto
      * @return Movie
      */
-
-    public ApiResponse addMovie(@RequestBody MovieDto movieDto) {
+    public ApiResponse addMovie(MovieDto movieDto, MultipartFile request) throws IOException {
         Movie movie = new Movie();
 
         List<Integer> actorsIds = movieDto.getActorsId();
@@ -86,13 +88,22 @@ public class MovieService {
 
         Integer distributorId = movieDto.getDistributorId();
         Optional<Distributor> optionalDistributor = distributorRepository.findById(distributorId);
-        if (!optionalDistributor.isPresent()){
-            return new ApiResponse("Distributor not found!",false);
+        if (!optionalDistributor.isPresent()) {
+            return new ApiResponse("Distributor not found!", false);
         }
         Distributor distributor = optionalDistributor.get();
         movie.setDistributor(distributor);
 
+        movie.setTitle(movieDto.getTitle());
+        movie.setDurationInMinutes(movieDto.getDurationInMin());
+        movie.setTrailerVideoUrl(movieDto.getTrailerVideoUrl());
+        movie.setMinPrice(movieDto.getMinPrice());
+        movie.setDistributorShareInPercentages(movieDto.getDistributorShareInPercentage());
 
+        Attachment upload = attachmentService.uploadFile(request);
+        movie.setCoverImage(upload);
 
+        Movie savedMovie = movieRepository.save(movie);
+        return new ApiResponse("Movie added!", true, savedMovie);
     }
 }
