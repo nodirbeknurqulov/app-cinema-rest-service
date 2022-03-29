@@ -1,16 +1,13 @@
-package uz.pdp.appcinemarestservice.entity.attachements;
+package uz.pdp.appcinemarestservice.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
+import lombok.*;
+import uz.pdp.appcinemarestservice.entity.Attachment;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.Arrays;
 
 // Nurkulov Nodirbek 3/15/2022  7:11 AM
 @EqualsAndHashCode(callSuper = true)
@@ -22,6 +19,13 @@ public class AttachmentContent extends AbsEntity {
 
     private byte[] data;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Attachment attachment;
+
+//    @Override
+//    public String toString() {
+//        return "AttachmentContent{" +
+//                "data=" + Arrays.toString(data) +
+//                '}';
+//    }
 }

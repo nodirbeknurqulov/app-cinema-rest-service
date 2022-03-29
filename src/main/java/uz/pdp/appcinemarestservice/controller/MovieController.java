@@ -34,7 +34,8 @@ public class MovieController {
      * @return List
      */
     @GetMapping
-    public HttpEntity<?> getAllMovies(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public HttpEntity<?> getAllMovies(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "10") int size) {
         List<Movie> allMovies = movieService.getAllMovies(page, size);
         return ResponseEntity.ok(allMovies);
     }

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import uz.pdp.appcinemarestservice.entity.Row;
+import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.repository.RowRepository;
 
 import java.util.List;
@@ -18,8 +19,23 @@ public class RowService {
 
     private final RowRepository rowRepository;
 
-    @GetMapping
     public ResponseEntity<List<Row>> getAllRows() {
+        return null;
+    }
+
+    public ApiResponse getRowById(Integer id) {
+        return null;
+    }
+
+    public ApiResponse addRow() {
+        return null;
+    }
+
+    public ApiResponse updateRow() {
+        return null;
+    }
+
+    public ApiResponse deleteRow() {
         return null;
     }
 }

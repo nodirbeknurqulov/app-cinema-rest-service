@@ -25,14 +25,6 @@ public class DistributorService {
 
     private final DistributorRepository distributorRepository;
 
-//    /**
-//     * get all movies
-//     * @return List
-//     */
-//    public List<Distributor> getDistributors() {
-//        return distributorRepository.findAll();
-//    }
-
     public List<Distributor> getAllDistributors(int page, int size) {
         PageRequest pageable = PageRequest.of(page, size);
         Page<Distributor> distributorPage = distributorRepository.findAll(pageable);

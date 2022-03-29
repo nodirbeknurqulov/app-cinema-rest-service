@@ -2,19 +2,10 @@ package uz.pdp.appcinemarestservice.payload;
 
 // Nurkulov Nodirbek 3/16/2022  12:01 PM
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import uz.pdp.appcinemarestservice.entity.*;
-import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class MovieDto {

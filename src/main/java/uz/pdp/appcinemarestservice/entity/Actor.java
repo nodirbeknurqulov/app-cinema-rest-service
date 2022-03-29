@@ -1,15 +1,11 @@
 package uz.pdp.appcinemarestservice.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.*;
 
-// Nurkulov Nodirbek 3/15/2022  7:09 AM
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -22,6 +18,15 @@ public class Actor extends AbsEntity {
     @Column(nullable = false)
     private String bio;
 
-    @OneToOne(mappedBy = "actor", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Attachment attachment;
+
+//    @Override
+//    public String toString() {
+//        return "Actor{" +
+//                "fullName='" + fullName + '\'' +
+//                ", bio='" + bio + '\'' +
+//                ", attachment=" + attachment.getName() +
+//                '}';
+//    }
 }

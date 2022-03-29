@@ -4,25 +4,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.appcinemarestservice.entity.Actor;
 import uz.pdp.appcinemarestservice.entity.Distributor;
 import uz.pdp.appcinemarestservice.entity.Genre;
 import uz.pdp.appcinemarestservice.entity.Movie;
-import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
+import uz.pdp.appcinemarestservice.entity.Attachment;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.payload.MovieDto;
 import uz.pdp.appcinemarestservice.repository.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +38,6 @@ public class MovieService {
      * @param size int
      * @return List
      */
-
     public List<Movie> getAllMovies(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Movie> moviePage = movieRepository.findAll(pageable);

@@ -1,21 +1,19 @@
 package uz.pdp.appcinemarestservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.AbstractResource;
-import org.springframework.core.io.ByteArrayResource;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import uz.pdp.appcinemarestservice.entity.attachements.Attachment;
-import uz.pdp.appcinemarestservice.entity.attachements.AttachmentContent;
+import uz.pdp.appcinemarestservice.entity.Attachment;
+import uz.pdp.appcinemarestservice.entity.AttachmentContent;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.repository.AttachmentContentRepository;
 import uz.pdp.appcinemarestservice.repository.AttachmentRepository;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -92,21 +90,20 @@ public class AttachmentService {
         return new ApiResponse("Error!", false);
     }
 
-    public Attachment uploadFile(MultipartFile file) throws IOException {
+        public Attachment uploadFile(MultipartFile file) throws IOException {
+        Attachment attachment = new Attachment();
+        attachment.setContentType(file.getContentType());
+        attachment.setOriginalFileName(file.getOriginalFilename());
+        attachment.setSize(file.getSize());
+        Attachment savedAttachment = attachmentRepository.save(attachment);
 
-//        attachmentRepository.save(new Attachment())
-//        attachment.setOriginalFileName(originalFilename);
-//        attachment.setSize(size);
-//        attachment.setContentType(contentType);
-//        Attachment savedAttachment = attachmentRepository.save(attachment);
-//
-//        AttachmentContent attachmentContent = new AttachmentContent();
-//        attachmentContent.setData(file.getBytes());
-//        attachmentContent.setAttachment(savedAttachment);
-//        attachmentContentRepository.save(attachmentContent);
-//        return savedAttachment;
+        AttachmentContent attachmentContent = new AttachmentContent();
+        attachmentContent.setData(file.getBytes());
+        attachmentContent.setAttachment(savedAttachment);
+        attachmentContentRepository.save(attachmentContent);
+
+        return savedAttachment;
     }
-
 
 
 }
