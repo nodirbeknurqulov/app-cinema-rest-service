@@ -22,4 +22,6 @@ public interface MovieSessionProjection {
 
     @Value("#{@hallRepository.getHallsAndTimesByMovieAnnouncementIdAndStartDateId(target.movieAnnouncementId, target.startDateId)}")
     List<HallAndTimesProjectionForSession> getHalls();
+
+
 }

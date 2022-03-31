@@ -32,7 +32,7 @@ public class StripeEventController {
 
         try {
             event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
-        } catch (Exception e) {
+        } catch (SignatureVerificationException e) {
             e.printStackTrace();
         }
 
@@ -48,11 +48,15 @@ public class StripeEventController {
 
     /**
      * Full fill order
+     *
      * @param session Session
      */
     public void fullFillOrder(Session session) {
         System.out.println("Current user's id: " + session.getClientReferenceId());
+
         String currentUserId = session.getClientReferenceId();
+
+        ticketService.addToPurchasedHistory(Integer.parseInt(currentUserId), session.getPaymentIntent());
         ticketService.changeTicketStatusToPurchase(Integer.parseInt(currentUserId));
     }
 }

@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class TicketService {
@@ -90,8 +91,9 @@ public class TicketService {
         ticketRepository.saveAll(newTicketsByUserIdAndStatus);
     }
 
-    public void addToPurchasedHistory(List<Ticket> ticketList) {
-        PurchasedHistory purchasedHistory = new PurchasedHistory(ticketList, null);
+    public void addToPurchasedHistory(Integer userId, String paymentIntent) {
+        List<Ticket> ticketList = ticketRepository.findByUserIdAndStatus(userId, TicketStatus.NEW);
+        PurchasedHistory purchasedHistory = new PurchasedHistory(ticketList,null);
         historyRepository.save(purchasedHistory);
     }
 }
