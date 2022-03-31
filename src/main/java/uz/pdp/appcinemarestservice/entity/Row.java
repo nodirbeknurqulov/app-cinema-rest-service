@@ -1,5 +1,6 @@
 package uz.pdp.appcinemarestservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,11 +21,12 @@ public class Row extends AbsEntity{
     @Column(nullable = false)
     private Integer number;
 
-    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
-    private List<Seat> seats;
-
     @ManyToOne
     private Hall hall;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
+    private List<Seat> seatList;
 
     public Row(Integer number, Hall hall) {
         this.number = number;

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -31,11 +32,11 @@ public class Movie extends AbsEntity {
     @OneToOne
     private Attachment coverImage;
 
-    @Column(nullable = false)
-    private String trailerVideoUrl; // ex. youtube link
+    @OneToOne
+    private Attachment trailerVideo; // ex. youtube link
 
     @Column(nullable = false)
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     @Column(nullable = false)
     private Double minPrice;
@@ -57,6 +58,15 @@ public class Movie extends AbsEntity {
     @ManyToMany
     private List<Genre> genres;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<MovieSchedule> movieSchedules;
+    public Movie(String title, String description, Integer durationInMinutes, Double minPrice, Attachment coverImage, Attachment trailerVideo, LocalDate releaseDate, Double budget, Double distributorShareInPercent) {
+        this.title = title;
+        this.description = description;
+        this.durationInMinutes = durationInMinutes;
+        this.minPrice = minPrice;
+        this.coverImage = coverImage;
+        this.trailerVideo = trailerVideo;
+        this.releaseDate = releaseDate;
+        this.budget = budget;
+        this.distributorShareInPercentages = distributorShareInPercent;
+    }
 }

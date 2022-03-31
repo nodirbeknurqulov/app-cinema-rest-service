@@ -17,6 +17,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "night_session_add_fee")
 public class NightSessionAdditionalFee extends AbsEntity {
-    private double percentage;
+    private Double percentage;
     private Date date;
 }

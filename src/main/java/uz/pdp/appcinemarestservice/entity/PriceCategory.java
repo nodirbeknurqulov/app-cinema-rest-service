@@ -20,19 +20,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "price_categories")
 public class PriceCategory extends AbsEntity {
-    @Column(nullable = false, length = 50)
-    private String name, color;
+    @Column(nullable = false, unique = true)
+    private String name;
 
     @Column(nullable = false)
     private Double addAddFeeInPercent;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "priceCategory")
-    private List<Seat> seats;
-
-    public PriceCategory(String name, Double addAddFeeInPercent, String color) {
-        this.name = name;
-        this.addAddFeeInPercent = addAddFeeInPercent;
-        this.color = color;
-    }
+    @Column(nullable = false)
+    private String color;
 
 }

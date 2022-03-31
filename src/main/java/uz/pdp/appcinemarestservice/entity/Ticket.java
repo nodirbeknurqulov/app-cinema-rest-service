@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import uz.pdp.appcinemarestservice.entity.enums.TicketStatus;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 // Nurkulov Nodirbek 3/15/2022  8:26 AM
 
@@ -18,17 +17,22 @@ import javax.persistence.OneToOne;
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "tickets")
 public class Ticket extends AbsEntity {
-    @ManyToOne
-    private MovieSchedule movieSession;
+    @OneToOne
+    MovieSession movie_session;
 
     @OneToOne
-    private Seat seat;
+    Seat seat;
 
     @OneToOne
-    private Attachment qr_code;
+    Attachment qr_code;
 
-    private double price;
+    @Column(nullable = false)
+    Double price;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    TicketStatus status;
 
     @ManyToOne
-    private Cart cart;
+    User user;
 }

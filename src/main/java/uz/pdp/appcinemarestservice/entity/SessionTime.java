@@ -9,6 +9,7 @@ import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.sql.Time;
+import java.time.LocalTime;
 
 // Nurkulov Nodirbek 3/15/2022  7:22 AM
 @AllArgsConstructor
@@ -18,5 +19,5 @@ import java.sql.Time;
 @Entity(name = "session_times")
 public class SessionTime extends AbsEntity {
 
-    private Time time;
+    private LocalTime time;
 }

@@ -31,9 +31,7 @@ public class User extends AbsEntity {
 
     private Date dateOfBirth;
 
-
     private Gender gender;
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -44,7 +42,6 @@ public class User extends AbsEntity {
                     name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
-
     @ManyToMany
     @JoinTable(
             name = "users_permissions",
@@ -53,6 +50,4 @@ public class User extends AbsEntity {
             inverseJoinColumns = @JoinColumn(
                     name = "permission_id", referencedColumnName = "id"))
     private List<Permission> permissions;
-
-
 }

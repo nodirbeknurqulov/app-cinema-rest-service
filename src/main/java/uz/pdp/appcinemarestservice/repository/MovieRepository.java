@@ -11,13 +11,14 @@ import uz.pdp.appcinemarestservice.projection.CustomMovie;
 
 public interface MovieRepository extends JpaRepository<Movie,Integer> {
 
-    @Query(value = "select cast(m.id as varchar)      as id,\n" +
-            "       title,\n" +
-            "       cast(release_date as date) as releaseDate,\n" +
-            "       cast(a.id as varchar)      as coverImgId\n" +
-            "from movies m\n" +
-            "         join attachments a on m.cover_image_id = a.id\n" +
-            "where lower(title) like lower(concat('%', :search, '%'))", nativeQuery = true)
+    @Query(value = "select\n" +
+            "                   m.id  ,\n" +
+            "                   m.title,\n" +
+            "                   cast(release_date as date) as releaseDate,\n" +
+            "                   a.id      as coverImgId\n" +
+            "            from movies m\n" +
+            "                     join attachments a on m.cover_image_id = a.id\n" +
+            "            where lower(title) like lower(concat('%', :search, '%'))", nativeQuery = true)
     Page<CustomMovie> findAllByPage(Pageable pageable, @Param("search") String search);
 
 }

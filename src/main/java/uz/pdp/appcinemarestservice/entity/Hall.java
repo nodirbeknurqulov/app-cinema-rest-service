@@ -1,6 +1,7 @@
 package uz.pdp.appcinemarestservice.entity;
 // Nurkulov Nodirbek 3/14/2022  11:13 PM
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,11 +25,17 @@ public class Hall extends AbsEntity {
     @Column(nullable = false)
     private double vipAdditionalFeeInPercentage;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL)
-    private List<Row> rows;
+    private List<Row> rowList;
 
     public Hall(String name) {
         this.name = name;
+    }
+
+    public Hall(String name, Double vipAdditionalFeeInPercent) {
+        this.name = name;
+        this.vipAdditionalFeeInPercentage = vipAdditionalFeeInPercent;
     }
 
 }

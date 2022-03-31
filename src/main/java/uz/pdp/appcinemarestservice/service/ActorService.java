@@ -47,11 +47,6 @@ public class ActorService {
         return actorPage.getContent();
     }
 
-    public ResponseEntity<?> getAllActor2(){
-        List<Actor> allActors = actorRepo.findAll();
-        return ResponseEntity.ok(new ApiResponse("Success",true,allActors));
-    }
-
     /**
      * GET ACTOR BY ID
      * @param id Integer

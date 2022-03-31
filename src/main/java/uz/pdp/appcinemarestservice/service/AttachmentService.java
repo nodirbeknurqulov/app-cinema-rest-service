@@ -51,7 +51,6 @@ public class AttachmentService {
             attachment.setSize(size);
             Attachment savedAttachment = attachmentRepository.save(attachment);
 
-
             assert originalFilename != null;
             String[] split = originalFilename.split("\\.");
 

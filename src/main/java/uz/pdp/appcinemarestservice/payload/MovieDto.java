@@ -5,18 +5,24 @@ package uz.pdp.appcinemarestservice.payload;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 public class MovieDto {
 
+    @NotNull(message = "Movie title can't be empty!")
     private String title;
 
+    @NotNull(message = "Movie description can't be empty!")
     private String description;
 
+    @NotNull(message = "Movie duration can't be empty!")
     private int durationInMin;
 
-    private MultipartFile request;
+    @NotNull(message = "Movie release date can't be empty!")
+    private LocalDate releaseDate;
 
     private String trailerVideoUrl;
 
@@ -24,51 +30,12 @@ public class MovieDto {
 
     private List<Integer> actorsId;
 
+    @NotNull(message = "Movie minimum price can't be empty!")
     private double minPrice;
 
+    @NotNull(message = "Movie distributor id can't be empty!")
     private Integer distributorId;
 
+    @NotNull(message = "Movie release date can't be empty!")
     private double distributorShareInPercentage;
-
-
-//    @Column(nullable = false)
-//    private String title;
-//
-//    @Column(nullable = false)
-//    private String description;
-//
-//    @Column(nullable = false)
-//    private Integer durationInMinutes;
-//
-//    @OneToOne
-//    private Attachment coverImage;
-//
-//    @Column(nullable = false)
-//    private String trailerVideoUrl; // ex. youtube link
-//
-//    @Column(nullable = false)
-//    private Date releaseDate;
-//
-//    @Column(nullable = false)
-//    private Double minPrice;
-//
-//    @ManyToOne
-//    private Distributor distributor;
-//
-//    @ManyToOne
-//    private Director director;
-//
-//    private Double budget;
-//
-//    @Column(nullable = false)
-//    private Double distributorShareInPercentages;
-//
-//    @ManyToMany
-//    private List<Actor> actors;
-//
-//    @ManyToMany
-//    private List<Genre> genres;
-//
-//    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-//    private List<MovieSchedule> movieSchedules;
 }

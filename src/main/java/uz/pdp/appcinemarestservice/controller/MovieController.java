@@ -11,9 +11,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.appcinemarestservice.entity.Movie;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.payload.MovieDto;
-import uz.pdp.appcinemarestservice.service.MovieService;
+import uz.pdp.appcinemarestservice.projection.CustomMovie;
+import uz.pdp.appcinemarestservice.service.MovieServiceImpl;
 import uz.pdp.appcinemarestservice.utill.Constant;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,31 +26,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MovieController {
 
-    private final MovieService movieService;
+    private final MovieServiceImpl movieService;
 
     /**
      * GET ALL MOVIES
-     *
      * @param page int
      * @param size int
      * @return List
      */
     @GetMapping
-    public HttpEntity<?> getAllMovies(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "10") int size) {
-        List<Movie> allMovies = movieService.getAllMovies(page, size);
+    public HttpEntity<?> getAllMovies(@RequestParam(name = "page", defaultValue = "0") int page,
+                                      @RequestParam(name = "size", defaultValue = "10") int size,
+                                      @RequestParam(name = "search", defaultValue = "") String search) {
+        List<CustomMovie> allMovies = movieService.getAllMovies(page, size, search);
         return ResponseEntity.ok(allMovies);
     }
 
     /**
-     * Add movie
+     * ADD MOVIE
      * @param movieDto MovieDto
      * @return HttpEntity
      */
     @PostMapping
-    public HttpEntity<?> addMovie(@RequestPart(name = "movie") MovieDto movieDto,
-                                  @RequestPart(name = "file") MultipartFile request) throws IOException {
-        ApiResponse apiResponse = movieService.addMovie(movieDto, request);
-        return ResponseEntity.status(apiResponse.isSuccess()? 200: 404).body(apiResponse);
+    public HttpEntity<?> addMovie(@RequestPart(name = "add-movie-json") @Valid @RequestBody MovieDto movieDto,
+                                  @RequestPart(name = "file") MultipartFile file) {
+        ApiResponse apiResponse = movieService.addMovie(file, movieDto);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
 }
