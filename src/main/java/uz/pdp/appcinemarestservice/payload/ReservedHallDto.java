@@ -14,7 +14,7 @@ import java.util.UUID;
 @Setter
 public class ReservedHallDto {
 
-    private UUID halId;
+    private Integer halId;
     private String startDate;
     private String endDate;
     private List<String> startTime;

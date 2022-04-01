@@ -10,22 +10,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uz.pdp.appcinemarestservice.entity.Attachment;
 import uz.pdp.appcinemarestservice.entity.AttachmentContent;
-import uz.pdp.appcinemarestservice.entity.PurchasedHistory;
+import uz.pdp.appcinemarestservice.entity.TransactionHistory;
 import uz.pdp.appcinemarestservice.entity.Ticket;
 import uz.pdp.appcinemarestservice.entity.enums.TicketStatus;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.projection.TicketProjection;
-import uz.pdp.appcinemarestservice.repository.AttachmentContentRepository;
-import uz.pdp.appcinemarestservice.repository.AttachmentRepository;
-import uz.pdp.appcinemarestservice.repository.HistoryRepository;
-import uz.pdp.appcinemarestservice.repository.TicketRepository;
+import uz.pdp.appcinemarestservice.repository.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +33,6 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final AttachmentRepository attachmentRepository;
     private final AttachmentContentRepository contentRepository;
-    private final HistoryRepository historyRepository;
 
     public ApiResponse purchaseTicket(Integer ticketId) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
@@ -89,11 +87,5 @@ public class TicketService {
             ticketsByUserIdAndStatus.setStatus(TicketStatus.PURCHASED);
         }
         ticketRepository.saveAll(newTicketsByUserIdAndStatus);
-    }
-
-    public void addToPurchasedHistory(Integer userId, String paymentIntent) {
-        List<Ticket> ticketList = ticketRepository.findByUserIdAndStatus(userId, TicketStatus.NEW);
-        PurchasedHistory purchasedHistory = new PurchasedHistory(ticketList,null);
-        historyRepository.save(purchasedHistory);
     }
 }

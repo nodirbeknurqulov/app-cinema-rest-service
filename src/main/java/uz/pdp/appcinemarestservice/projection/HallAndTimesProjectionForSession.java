@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface HallAndTimesProjectionForSession {
 
-    UUID getId();
+    Integer getId();
 
     String getName();
 

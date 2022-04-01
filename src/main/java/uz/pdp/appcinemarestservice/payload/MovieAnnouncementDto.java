@@ -12,8 +12,9 @@ import java.util.UUID;
 public class MovieAnnouncementDto {
 
     @NotNull(message = "MOVIE_ANNOUNCEMENT_REQUIRED")
-    private UUID movieId;
+    private Integer movieId;
 
     @NotBlank(message = "IS_ACTIVE_REQUIRED")
     private boolean isActive;
+
 }

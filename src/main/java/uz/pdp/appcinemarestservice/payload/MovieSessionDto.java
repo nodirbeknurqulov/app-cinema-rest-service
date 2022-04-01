@@ -14,6 +14,6 @@ import java.util.UUID;
 @Setter
 public class MovieSessionDto {
 
-    private UUID movieAnnouncementId;
+    private Integer movieAnnouncementId;
     private List<ReservedHallDto> reservedHallDtoList;
 }

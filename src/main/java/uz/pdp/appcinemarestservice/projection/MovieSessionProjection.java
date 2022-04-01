@@ -4,19 +4,19 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
+
 
 public interface MovieSessionProjection {
 
-    UUID getMovieAnnouncementId(); // afisha id
+    Integer getMovieAnnouncementId(); // afisha id
 
-    UUID getMovieId();
+    Integer getMovieId();
 
     String getMovieTitle();
 
-    UUID getMovieCoverImgId();
+    Integer getMovieCoverImgId();
 
-    UUID getStartDateId();
+    Integer getStartDateId();
 
     LocalDate getStartDate();
 

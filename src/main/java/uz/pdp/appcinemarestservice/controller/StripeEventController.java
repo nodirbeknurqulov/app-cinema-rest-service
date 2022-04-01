@@ -8,7 +8,9 @@ import com.stripe.net.Webhook;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.appcinemarestservice.repository.TransactionHistoryRepository;
 import uz.pdp.appcinemarestservice.service.TicketService;
+import uz.pdp.appcinemarestservice.service.TransactionHistoryService;
 
 // Nurkulov Nodirbek 3/31/2022  9:27 AM
 
@@ -18,6 +20,7 @@ import uz.pdp.appcinemarestservice.service.TicketService;
 public class StripeEventController {
 
     private final TicketService ticketService;
+    private final TransactionHistoryService transactionHistoryService;
 
     @Value("${STRIPE_KEY}")
     String stripeApiKey;
@@ -46,17 +49,10 @@ public class StripeEventController {
         return "";
     }
 
-    /**
-     * Full fill order
-     *
-     * @param session Session
-     */
     public void fullFillOrder(Session session) {
         System.out.println("Current user's id: " + session.getClientReferenceId());
-
         String currentUserId = session.getClientReferenceId();
-
-        ticketService.addToPurchasedHistory(Integer.parseInt(currentUserId), session.getPaymentIntent());
+        transactionHistoryService.addTransactionHistory(Integer.parseInt(currentUserId), session.getPaymentIntent());
         ticketService.changeTicketStatusToPurchase(Integer.parseInt(currentUserId));
     }
 }

@@ -1,4 +1,5 @@
 package uz.pdp.appcinemarestservice.controller;
+// Nurkulov Nodirbek 4/1/2022  11:05 AM
 
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -13,23 +14,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.appcinemarestservice.entity.User;
+import uz.pdp.appcinemarestservice.payload.ApiResponse;
 import uz.pdp.appcinemarestservice.projection.TicketProjection;
 import uz.pdp.appcinemarestservice.repository.TicketRepository;
+import uz.pdp.appcinemarestservice.repository.TransactionHistoryRepository;
 import uz.pdp.appcinemarestservice.repository.UserRepository;
+import uz.pdp.appcinemarestservice.service.TicketService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// Nurkulov Nodirbek 3/30/2022  11:57 AM
 @RestController
-@RequestMapping("/api/purchase")
 @RequiredArgsConstructor
-public class PurchaseController {
+public class TransactionHistoryController {
 
-    private UserRepository userRepository;
-    private TicketRepository ticketRepository;
+    private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
+    private final TransactionHistoryRepository transactionHistoryRepository;
 
-    @GetMapping
+    @GetMapping("/api/purchase")
     public HttpEntity<?> createStripeSession() {
 
         Stripe.apiKey = "sk_test_51Kiti6Ao7BOEJ2PVKqf0856wWii5NiROlYxBi9cHSLgQQBpsxbk9NROOjL5R1XZxlpwhil44EdSzDInxQb0MvsTv00PROPNSlY";
@@ -81,18 +84,19 @@ public class PurchaseController {
         return ResponseEntity.badRequest().build();
     }
 
-    public HttpEntity<?> refundTicket() {
-        RefundCreateParams params = RefundCreateParams
-                .builder()
-//                .setPaymentIntent()
-                .build();
-        try {
-            Refund refund = Refund.create(params);
-            String paymentIntent = refund.getPaymentIntent();
-
-        } catch (StripeException e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.ok("dffsg");
-    }
+//    public HttpEntity<?> refundTicket() {
+//        String paymentIntent = transactionHistoryRepository.getPaymentIntentByTicketId(refundingTickets.get(0).getId());
+//        RefundCreateParams params = RefundCreateParams
+//                .builder()
+//                .setPaymentIntent(paymentIntent)
+//                .build();
+//        try {
+//            Refund refund = Refund.create(params);
+//
+//
+//        } catch (StripeException e) {
+//            return new ApiResponse("Something went wrong with Stripe server", false);
+//        }
+//        return ResponseEntity.ok("dffsg");
+//    }
 }

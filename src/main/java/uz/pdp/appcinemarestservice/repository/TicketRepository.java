@@ -11,16 +11,26 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
-    @Query(nativeQuery = true, value = "select cast(id as varchar), status from tickets where id = :id")
+    @Query(nativeQuery = true, value = "" +
+            "select " +
+            "id," +
+            "status " +
+            "from tickets" +
+            "where id = :id")
     CustomTicketForCart getTicketByIdForCart(Integer id);
 
-    @Query(nativeQuery = true, value = "select distinct * from tickets" +
+    @Query(nativeQuery = true, value = "" +
+            "select " +
+            "distinct " +
+            "* " +
+            "from tickets" +
             " where movie_session_id = :movieSessionId" +
             " and seat_id = :seatId" +
             " and status <> 'REFUNDED'")
     CustomTicketForCart checkSeatIfAvailable(Integer movieSessionId, Integer seatId);
 
-    @Query(nativeQuery = true, value = "select m.title,\n" +
+    @Query(nativeQuery = true, value = "" +
+            "select m.title,\n" +
             "       t.price\n" +
             "from tickets t\n" +
             "         join movie_sessions ms on ms.id = t.movie_session_id\n" +

@@ -1,12 +1,9 @@
 package uz.pdp.appcinemarestservice.service;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import uz.pdp.appcinemarestservice.entity.WaitingPurchaseTime;
 
-import java.util.UUID;
-
-public interface WaitingTimeRepository extends JpaRepository<WaitingPurchaseTime, UUID> {
+public interface WaitingTimeRepository extends JpaRepository<WaitingPurchaseTime, Integer> {
 
     @Query(nativeQuery = true,value = "select minute " +
             "from waiting_purchase_times " +

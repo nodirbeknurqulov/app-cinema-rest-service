@@ -18,7 +18,7 @@ public class HallController {
     private final HallService hallService;
 
     @GetMapping
-    public HttpEntity<?> getAllHall() {
+    public HttpEntity<?> getAllHalls() {
         ApiResponse apiResponse = hallService.getAllHalls();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 204).body(apiResponse);
     }
