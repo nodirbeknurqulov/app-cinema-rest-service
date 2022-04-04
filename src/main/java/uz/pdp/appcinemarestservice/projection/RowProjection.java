@@ -7,7 +7,7 @@ import uz.pdp.appcinemarestservice.entity.Row;
 @Projection(types = {Row.class, Hall.class})
 public interface RowProjection {
 
-    Long getId();
+    Integer getId();
 
     Integer getNumber();
 

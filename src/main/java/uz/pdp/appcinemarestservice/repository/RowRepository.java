@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface RowRepository extends JpaRepository<Row, Integer> {
     @Query(value = "select " +
-            "cast(r.id as varchar) as id, " +
+            "r.id, " +
             "r.number, " +
             "h.name as Name " +
             "from hall_rows r " +

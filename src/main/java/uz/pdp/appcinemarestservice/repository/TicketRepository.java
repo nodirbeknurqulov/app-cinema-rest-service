@@ -39,5 +39,18 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
             "            where t.user_id= :userId\n")
     List<TicketProjection> getTicketsByUserId(Integer userId);
 
+
+
+    @Query(nativeQuery = true, value = "select t.id as id,\n" +
+            "       t.price as price,\n" +
+            "       m.title as movieTitle\n" +
+            "from tickets t\n" +
+            "         join movie_sessions ms on t.movie_session_id = ms.id\n" +
+            "join movie_announcement ma on ms.movie_announcement_id = ma.id\n" +
+            "join movies m on ma.movie_id = m.id\n" +
+            "where t.user_id = :userId and t.status = 'NEW'")
+    List<TicketProjection>  getTicketByUserId(Integer userId);
+
+
     List<Ticket> findByUserIdAndStatus(Integer user_id, TicketStatus status);
 }

@@ -14,4 +14,9 @@ public class StripePaymentController {
     public ResponseEntity<?> getSuccess() {
         return ResponseEntity.ok("To'lov amalga oshirildi");
     }
+
+    @RequestMapping("/payment-failed")
+    public ResponseEntity<?> getFailed(){
+        return ResponseEntity.ok("To'lov amalga oshirilmadi");
+    }
 }

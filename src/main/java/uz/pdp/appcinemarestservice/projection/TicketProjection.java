@@ -1,6 +1,6 @@
 package uz.pdp.appcinemarestservice.projection;
 
 public interface TicketProjection {
-    String getTitle();
+    String getMovieTitle();
     Double getPrice();
 }

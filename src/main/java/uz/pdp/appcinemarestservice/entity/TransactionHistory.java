@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Entity(name = "purchased_histories")
+@Entity(name = "transaction_histories")
 public class TransactionHistory extends AbsEntity {
 
         @ManyToMany

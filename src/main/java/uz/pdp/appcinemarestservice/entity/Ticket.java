@@ -18,20 +18,20 @@ import javax.persistence.*;
 @Entity(name = "tickets")
 public class Ticket extends AbsEntity {
     @OneToOne
-    MovieSession movie_session;
+    MovieSession movieSession;
 
     @OneToOne
     Seat seat;
 
     @OneToOne
-    Attachment qr_code;
+    Attachment qrCode;
 
     @Column(nullable = false)
     Double price;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    TicketStatus status;
+    TicketStatus status = TicketStatus.NEW;
 
     @ManyToOne
     User user;

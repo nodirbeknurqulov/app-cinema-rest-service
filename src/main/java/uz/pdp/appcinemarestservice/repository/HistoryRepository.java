@@ -11,4 +11,5 @@ import uz.pdp.appcinemarestservice.projection.TicketProjection;
 import java.util.List;
 
 public interface HistoryRepository extends JpaRepository<TransactionHistory, Integer> {
+
 }

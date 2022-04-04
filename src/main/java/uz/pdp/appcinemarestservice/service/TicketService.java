@@ -11,12 +11,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uz.pdp.appcinemarestservice.entity.Attachment;
-import uz.pdp.appcinemarestservice.entity.AttachmentContent;
-import uz.pdp.appcinemarestservice.entity.TransactionHistory;
-import uz.pdp.appcinemarestservice.entity.Ticket;
+import uz.pdp.appcinemarestservice.entity.*;
 import uz.pdp.appcinemarestservice.entity.enums.TicketStatus;
 import uz.pdp.appcinemarestservice.payload.ApiResponse;
+import uz.pdp.appcinemarestservice.payload.TicketDto;
 import uz.pdp.appcinemarestservice.projection.TicketProjection;
 import uz.pdp.appcinemarestservice.repository.*;
 
@@ -33,19 +31,23 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final AttachmentRepository attachmentRepository;
     private final AttachmentContentRepository contentRepository;
+    private final MovieSessionRepository movieSessionRepository;
+private final SeatRepository seatRepository;
+private final UserRepository userRepository;
 
-    public ApiResponse purchaseTicket(Integer ticketId) {
-        Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
-        if (optionalTicket.isPresent()) {
-            Ticket ticket = optionalTicket.get();
-            Attachment attachment = getQrCodeAttachment(ticketId);
-            ticket.setQr_code(attachment);
-            ticket.setStatus(TicketStatus.PURCHASED);
-            ticketRepository.save(ticket);
-            return new ApiResponse("Ticket purchased!", true, attachment.getId());
-        }
-        return new ApiResponse("Ticket is not added!", false);
-    }
+
+//    public ApiResponse purchaseTicket(Integer ticketId) {
+//        Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
+//        if (optionalTicket.isPresent()) {
+//            Ticket ticket = optionalTicket.get();
+//            Attachment attachment = getQrCodeAttachment(ticketId);
+//            ticket.setQr_code(attachment);
+//            ticket.setStatus(TicketStatus.PURCHASED);
+//            ticketRepository.save(ticket);
+//            return new ApiResponse("Ticket purchased!", true, attachment.getId());
+//        }
+//        return new ApiResponse("Ticket is not added!", false);
+//    }
 
     public Attachment getQrCodeAttachment(Integer ticketId) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
@@ -77,9 +79,10 @@ public class TicketService {
     }
 
     public HttpEntity<?> getCurrentUserTickets(Integer userId) {
-        List<TicketProjection> allTickets = ticketRepository.getTicketsByUserId(userId);
+        List<TicketProjection> allTickets = ticketRepository.getTicketByUserId(userId);
         return ResponseEntity.ok(allTickets);
     }
+
 
     public void changeTicketStatusToPurchase(Integer userId) {
         List<Ticket> newTicketsByUserIdAndStatus = ticketRepository.findByUserIdAndStatus(userId, TicketStatus.NEW);
@@ -88,4 +91,37 @@ public class TicketService {
         }
         ticketRepository.saveAll(newTicketsByUserIdAndStatus);
     }
+
+    public HttpEntity<?> createAndAddTicket(TicketDto ticketDto) {
+
+        Ticket ticket = new Ticket();
+
+        Optional<MovieSession> optionalMovieSession = movieSessionRepository.findById(ticketDto.getMovieSessionId());
+        if (!optionalMovieSession.isPresent()) {
+            return ResponseEntity.ok(new ApiResponse("MovieSession is not found", false));
+        }
+        MovieSession movieSession = optionalMovieSession.get();
+
+        Optional<Seat> optionalSeat = seatRepository.findById(ticketDto.getSeatId());
+        if (!optionalSeat.isPresent()) {
+            return ResponseEntity.ok(new ApiResponse("Seat is not found", false));
+        }
+
+        Seat seat = optionalSeat.get();
+
+        Optional<User> optionalUser = userRepository.findById(1);
+        if (!optionalUser.isPresent()) {
+            return ResponseEntity.ok(new ApiResponse("User is not found", false));
+        }
+
+        User user = optionalUser.get();
+        double minPrice = movieSession.getMovieAnnouncement().getMovie().getMinPrice();
+        ticket.setSeat(seat);
+        ticket.setUser(user);
+        ticket.setPrice(minPrice);
+        ticket.setMovieSession(movieSession);
+        ticketRepository.save(ticket);
+        return ResponseEntity.ok(new ApiResponse("Successfully added", true));
+    }
+
 }

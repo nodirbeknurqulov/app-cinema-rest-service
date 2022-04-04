@@ -6,11 +6,22 @@ import com.stripe.model.Event;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.LifecycleState;
+import org.hibernate.validator.constraints.br.TituloEleitoral;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.appcinemarestservice.entity.PaymentType;
+import uz.pdp.appcinemarestservice.entity.Ticket;
+import uz.pdp.appcinemarestservice.entity.TransactionHistory;
+import uz.pdp.appcinemarestservice.entity.enums.TicketStatus;
+import uz.pdp.appcinemarestservice.repository.PaymentTypeRepository;
+import uz.pdp.appcinemarestservice.repository.TicketRepository;
 import uz.pdp.appcinemarestservice.repository.TransactionHistoryRepository;
 import uz.pdp.appcinemarestservice.service.TicketService;
 import uz.pdp.appcinemarestservice.service.TransactionHistoryService;
+
+import java.util.List;
 
 // Nurkulov Nodirbek 3/31/2022  9:27 AM
 
@@ -27,6 +38,12 @@ public class StripeEventController {
 
     @Value("${WEBHOOK_SECRET_KEY}")
     String endpointSecret;
+
+    @Autowired
+    TicketRepository ticketRepository;
+    @Autowired
+    TransactionHistoryRepository transactionHistoryRepository;
+    private final PaymentTypeRepository paymentTypeRepository;
 
     @PostMapping
     public Object handle(@RequestBody String payload, @RequestHeader(name = "Stripe-Signature") String sigHeader) {
@@ -50,9 +67,13 @@ public class StripeEventController {
     }
 
     public void fullFillOrder(Session session) {
-        System.out.println("Current user's id: " + session.getClientReferenceId());
-        String currentUserId = session.getClientReferenceId();
-        transactionHistoryService.addTransactionHistory(Integer.parseInt(currentUserId), session.getPaymentIntent());
-        ticketService.changeTicketStatusToPurchase(Integer.parseInt(currentUserId));
+        List<Ticket> ticketList = ticketRepository.findByUserIdAndStatus(Integer.parseInt(session.getClientReferenceId()), TicketStatus.NEW);
+        for (Ticket ticket : ticketList) {
+            ticket.setStatus(TicketStatus.PURCHASED);
+            ticketRepository.save(ticket);
+        }
+
+        transactionHistoryRepository.save(new TransactionHistory(ticketList, session.getAmountTotal().doubleValue(), false, paymentTypeRepository.findById(1).get(), session.getPaymentIntent()));
+
     }
 }

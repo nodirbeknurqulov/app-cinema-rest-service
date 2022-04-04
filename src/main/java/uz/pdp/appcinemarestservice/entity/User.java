@@ -26,9 +26,6 @@ public class User extends AbsEntity {
     @Column(nullable = false,unique = true)
     private String username;
 
-    @OneToOne
-    private Cart cart;
-
     private Date dateOfBirth;
 
     private Gender gender;

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Entity(name = "rows")
+@Entity(name = "h_rows")
 public class Row extends AbsEntity{
 
     @Column(nullable = false)

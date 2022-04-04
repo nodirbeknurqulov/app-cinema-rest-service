@@ -1,7 +1,5 @@
 package uz.pdp.appcinemarestservice.projection;
 
-import java.util.UUID;
-
 public interface AvailableProjection {
 
         Integer getId();
