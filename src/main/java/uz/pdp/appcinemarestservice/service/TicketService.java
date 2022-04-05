@@ -95,7 +95,6 @@ private final UserRepository userRepository;
     public HttpEntity<?> createAndAddTicket(TicketDto ticketDto) {
 
         Ticket ticket = new Ticket();
-
         Optional<MovieSession> optionalMovieSession = movieSessionRepository.findById(ticketDto.getMovieSessionId());
         if (!optionalMovieSession.isPresent()) {
             return ResponseEntity.ok(new ApiResponse("MovieSession is not found", false));

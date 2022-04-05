@@ -50,7 +50,6 @@ public class MovieController {
     @PostMapping
     public HttpEntity<?> addMovie(@RequestPart(name = "add-movie-json") @Valid @RequestBody MovieDto movieDto,
                                   @RequestPart(name = "file") MultipartFile file) {
-        ApiResponse apiResponse = movieService.addMovie(file, movieDto);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
+        return movieService.addMovie(file, movieDto);
     }
 }

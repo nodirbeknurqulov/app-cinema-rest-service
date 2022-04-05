@@ -26,7 +26,7 @@ import java.util.List;
 // Nurkulov Nodirbek 3/31/2022  9:27 AM
 
 @RestController
-@RequestMapping("/api/stripe-webhook")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class StripeEventController {
 
@@ -45,7 +45,7 @@ public class StripeEventController {
     TransactionHistoryRepository transactionHistoryRepository;
     private final PaymentTypeRepository paymentTypeRepository;
 
-    @PostMapping
+    @PostMapping("/webhook")
     public Object handle(@RequestBody String payload, @RequestHeader(name = "Stripe-Signature") String sigHeader) {
         Stripe.apiKey = stripeApiKey;
         Event event = null;

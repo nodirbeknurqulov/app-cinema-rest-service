@@ -15,7 +15,7 @@ public interface MovieService {
 
     HttpEntity<?> getMovieById(Integer id);
 
-    ApiResponse addMovie(MultipartFile file, MovieDto movieDto);
+    HttpEntity addMovie(MultipartFile file, MovieDto movieDto);
 
     ApiResponse updateMovie(Integer id, MultipartFile file, MovieDto movieDto);
 

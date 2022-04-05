@@ -7,4 +7,5 @@ import uz.pdp.appcinemarestservice.entity.Distributor;
 public interface DistributorRepository extends JpaRepository<Distributor,Integer> {
     boolean existsByFullName(String fullName);
     boolean existsByFullNameAndId(String fullName, Integer id);
+    void getDistributorById(Integer id);
 }
