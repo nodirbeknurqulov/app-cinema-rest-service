@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import uz.pdp.appcinemarestservice.entity.enums.RoleEnum;
 import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.*;
@@ -19,7 +20,8 @@ import java.util.List;
 public class Role extends AbsEntity {
 
     @Column(nullable = false)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum roleEnum;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

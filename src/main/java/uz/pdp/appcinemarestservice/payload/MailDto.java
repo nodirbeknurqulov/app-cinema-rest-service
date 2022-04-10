@@ -13,4 +13,10 @@ public class MailDto {
     private String message;
     private String subject;
     private String name;
+
+    public MailDto(String to, String message, String subject) {
+        this.to = to;
+        this.message = message;
+        this.subject = subject;
+    }
 }

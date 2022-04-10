@@ -29,19 +29,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
-    private final ActorRepository actorRepository;
-    private final GenreRepository genreRepository;
-    private final DistributorRepository distributorRepository;
-    private final AttachmentService attachmentService;
 
-    /**
-     * GET ALL MOVIES
-     *
-     * @param size   int
-     * @param page   int
-     * @param search String
-     * @return List
-     */
     @Override
     public List<CustomMovie> getAllMovies(int size, int page, String search) {
         Pageable pageable = PageRequest.of(page, size);
@@ -54,44 +42,9 @@ public class MovieServiceImpl implements MovieService {
         return null;
     }
 
-    /**
-     * ADD MOVIE
-     *
-     * @param file     int
-     * @param movieDto MovieDto
-     * @return ApiResponse
-     */
     @Override
     public HttpEntity<?> addMovie(MultipartFile file, MovieDto movieDto) {
-//        String title;
-//        String description;
-//        int durationInMin;
-//        LocalDate releaseDate;
-//        String trailerVideoUrl;
-//        double minPrice;
-//        double distributorShareInPercentage;
-
-//        List<Integer> genreIds;
-//        List<Integer> actorsId;
-
-        //1.NEW MOVIE CREATED
-        Movie addingMovie = new Movie();
-
-        //1.CHECKING DISTRIBUTOR
-        Integer distributorId = movieDto.getDistributorId();
-        Optional<Distributor> optionalDistributor = distributorRepository.findById(distributorId);
-        if (optionalDistributor.isPresent()) {
-            Distributor distributor = optionalDistributor.get();
-            addingMovie.setDistributor(distributor);
-        }
-        return ResponseEntity.ok("Distributor not found!");
-
-
-        //2.GENRES
-        // TODO: 4/5/2022 genres
-
-        //3.ACTORS
-        // TODO: 4/5/2022 actors
+        return ResponseEntity.ok("Movie saved!");
     }
 
     @Override

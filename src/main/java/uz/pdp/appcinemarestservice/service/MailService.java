@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import uz.pdp.appcinemarestservice.entity.Ticket;
 import uz.pdp.appcinemarestservice.payload.MailDto;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -64,29 +66,23 @@ public class MailService {
         return ResponseEntity.ok("Error");
     }
 
-    public HttpEntity<?> sendEmailWithTemplate(MailDto mailDto) {
+    public HttpEntity<?> sendEmailWithTemplate(MailDto mailDto, List<Ticket> ticketList) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
             Map<String, Object> objectMap = new HashMap<>();
-            objectMap.put("name", mailDto.getName());
-            objectMap.put("age", 26);
-            objectMap.put("message", mailDto.getMessage());
+            objectMap.put("ticketList",ticketList);
 
             Context context = new Context();
             context.setVariables(objectMap);
-            String indexHtml = templateEngine.process("template-freemarker", context);
+            String indexHtml = templateEngine.process("email-template", context);
 
             helper.setFrom("nodirbeknurqulov096@gmail.com");
-            helper.setTo(mailDto.getTo());
-            helper.setSubject(mailDto.getSubject());
             helper.setText(indexHtml, true);
-            File file = ResourceUtils.getFile("classpath:templates/template-freemarker.html");
-            helper.addAttachment("index.html", file);
             mailSender.send(message);
             return ResponseEntity.ok("Email successfully sent!!!");
 
-        } catch (MessagingException | FileNotFoundException e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
         return ResponseEntity.ok("Error for sending email!!!");

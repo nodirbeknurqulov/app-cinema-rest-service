@@ -22,14 +22,7 @@ public class MailController {
     private final MailService mailSenderService;
 
     @PostMapping
-    public HttpEntity<?> sendEmil(@RequestBody MailDto mailDto) throws MessagingException, TemplateException, IOException {
-        //1. oddiy text xabar yuboradi
-//        return mailSenderService.sendMail(mailDto);
-        //2. oddiy text xabar bilan birga file yuboradi
-//        return mailSenderService.sendMessageWithAttachment(mailDto);
-        //3. template email yuborish
-//        return mailSenderService.sendEmailWithTemplate(mailDto);
-        //4. sendEmailHtml
-        return mailSenderService.sendEmailWithTemplate(mailDto);
+    public HttpEntity<?>sendEmail (@RequestBody MailDto mailDto){
+        return mailSenderService.sendMessageWithAttachment(mailDto);
     }
 }

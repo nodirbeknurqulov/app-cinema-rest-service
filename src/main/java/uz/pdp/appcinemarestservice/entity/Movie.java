@@ -8,6 +8,7 @@ import uz.pdp.appcinemarestservice.entity.template.AbsEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -57,4 +58,33 @@ public class Movie extends AbsEntity {
 
     @ManyToMany
     private List<Genre> genres;
+
+    public Movie(Integer id, LocalDateTime createdAt, LocalDateTime updatedAt, String title, String description, Integer durationInMinutes, Attachment coverImage, Attachment trailerVideo, LocalDate releaseDate, Double minPrice, Distributor distributor, Director director, Double budget, Double distributorShareInPercentages) {
+        super(id, createdAt, updatedAt);
+        this.title = title;
+        this.description = description;
+        this.durationInMinutes = durationInMinutes;
+        this.coverImage = coverImage;
+        this.trailerVideo = trailerVideo;
+        this.releaseDate = releaseDate;
+        this.minPrice = minPrice;
+        this.distributor = distributor;
+        this.director = director;
+        this.budget = budget;
+        this.distributorShareInPercentages = distributorShareInPercentages;
+    }
+
+    public Movie(String title, String description, Integer durationInMinutes, Attachment coverImage, Attachment trailerVideo, LocalDate releaseDate, Double minPrice, Distributor distributor, Director director, Double budget, Double distributorShareInPercentages) {
+        this.title = title;
+        this.description = description;
+        this.durationInMinutes = durationInMinutes;
+        this.coverImage = coverImage;
+        this.trailerVideo = trailerVideo;
+        this.releaseDate = releaseDate;
+        this.minPrice = minPrice;
+        this.distributor = distributor;
+        this.director = director;
+        this.budget = budget;
+        this.distributorShareInPercentages = distributorShareInPercentages;
+    }
 }

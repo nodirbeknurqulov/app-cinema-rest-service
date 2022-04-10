@@ -7,8 +7,9 @@ import uz.pdp.appcinemarestservice.projection.CustomTicket;
 
 import java.util.List;
 import java.lang.Integer;
+import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User,Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(nativeQuery = true, value = "select distinct t.id " +
             "                s.number  as seatNumber,\n" +
             "                hr.number as rowNumber,\n" +
@@ -48,5 +49,5 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "and id =:ticketId ")
     void deleteTicketFromCart(Integer userId, Integer ticketId);
 
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 }
